@@ -99,6 +99,7 @@ import (
 	nr_consul "github.com/dapr/components-contrib/nameresolution/consul"
 	nr_kubernetes "github.com/dapr/components-contrib/nameresolution/kubernetes"
 	nr_mdns "github.com/dapr/components-contrib/nameresolution/mdns"
+	nr_svcreg "github.com/dapr/components-contrib/nameresolution/svcreg"
 
 	nr_loader "github.com/dapr/dapr/pkg/components/nameresolution"
 
@@ -344,6 +345,9 @@ func main() {
 			}),
 		),
 		runtime.WithNameResolutions(
+			nr_loader.New("svcreg", func() nr.Resolver {
+				return nr_svcreg.NewResolver(logContrib)
+			}),
 			nr_loader.New("mdns", func() nr.Resolver {
 				return nr_mdns.NewResolver(logContrib)
 			}),
